@@ -1,10 +1,12 @@
-import { Button } from "./components/ui/button";
+import Launches from "./launches/page";
+import logo from "./assets/logo.svg";
 
 function App() {
   return (
     <>
-      <div>
-        <Button>Click me</Button>
+      <div className="space-y-8 p-8">
+        <img src={logo} alt="Launchpad explorer logo" width="300px;" />
+        <Launches />
       </div>
     </>
   );
