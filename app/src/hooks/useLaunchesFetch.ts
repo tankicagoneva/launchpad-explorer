@@ -1,9 +1,9 @@
 import { useState, useCallback } from "react";
-import { API_URL_LAUNCHES } from "../config";
-import { LaunchFetchState } from "../types/launch";
+import { API_URL_LAUNCHES } from "../config/apiLaunchConfig";
+import { Launch } from "../types/launch";
 
 export const useLaunchFetch = () => {
-  const [state, setState] = useState<LaunchFetchState>({ launches: [] });
+  const [launches, setLaunches] = useState<Launch[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
 
@@ -13,9 +13,9 @@ export const useLaunchFetch = () => {
 
     try {
       const endpoint = `${API_URL_LAUNCHES}`;
-      const result = await (await fetch(endpoint)).json();
-      console.log(result);
-      setState({ launches: result });
+      const response = await fetch(endpoint);
+      const getLaunchesJson = await response.json();
+      setLaunches(getLaunchesJson);
     } catch (error) {
       setError(true);
     }
@@ -23,5 +23,5 @@ export const useLaunchFetch = () => {
     setLoading(false);
   }, []);
 
-  return [state, loading, error, fetchData] as const;
+  return [launches, loading, error, fetchData] as const;
 };

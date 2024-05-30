@@ -12,7 +12,3 @@ export interface Launch {
     };
   };
 }
-
-export interface LaunchFetchState {
-  launches: Launch[];
-}
