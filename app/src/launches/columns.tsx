@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { ChevronsUpDown, MoreHorizontal } from "lucide-react";
 import { Launch } from "../types/launch";
 
 export const columns: ColumnDef<Launch>[] = [
@@ -23,7 +23,23 @@ export const columns: ColumnDef<Launch>[] = [
     accessorKey: "id",
   },
   {
-    header: "Name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          {" "}
+          Name
+          <ChevronsUpDown
+            size={12}
+            color="currentColor"
+            strokeWidth={2}
+            className="ml-2"
+          />
+        </Button>
+      );
+    },
     accessorKey: "name",
   },
 
@@ -33,7 +49,23 @@ export const columns: ColumnDef<Launch>[] = [
   },
 
   {
-    header: "Date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          {" "}
+          Date
+          <ChevronsUpDown
+            size={12}
+            color="currentColor"
+            strokeWidth={2}
+            className="ml-2"
+          />
+        </Button>
+      );
+    },
     accessorKey: "date_utc",
     cell: ({ row }) => {
       const date = new Date(row.original.date_utc);
