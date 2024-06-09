@@ -10,6 +10,7 @@ import {
   getSortedRowModel,
   useReactTable,
   ColumnFiltersState,
+  VisibilityState,
 } from "@tanstack/react-table";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -17,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -26,6 +28,7 @@ interface DataTableProps<TData, TValue> {
 export function LaunchesDataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
 
   const table = useReactTable({
     data,
@@ -37,9 +40,12 @@ export function LaunchesDataTable<TData, TValue>({ columns, data }: DataTablePro
 
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
+
     state: {
       sorting,
       columnFilters,
+      columnVisibility,
     },
   });
 
@@ -52,6 +58,35 @@ export function LaunchesDataTable<TData, TValue>({ columns, data }: DataTablePro
           value={(table.getColumn("name")?.getFilterValue() as string) || ""}
           onChange={(e) => table.getColumn("name")?.setFilterValue(e.target.value)}
         />
+
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant="outline" className="ml-auto">
+              Columns
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => {
+                const headerContent = column.id
+                  .split("_")
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ");
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value: boolean) => column.toggleVisibility(!!value)}
+                  >
+                    {headerContent}
+                  </DropdownMenuCheckboxItem>
+                );
+              })}{" "}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       <div className="rounded-md border">
