@@ -12,8 +12,20 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 import { ChevronsUpDown, MoreHorizontal } from "lucide-react";
 import { Launch } from "../types/launch";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const columns: ColumnDef<Launch>[] = [
+  {
+    id: "select",
+    header: ({ table }) => {
+      return <Checkbox checked={table.getIsAllPageRowsSelected()} onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}></Checkbox>;
+    },
+    cell: ({ row }) => {
+      return <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)}></Checkbox>;
+    },
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     header: "Flight Number",
     accessorKey: "flight_number",
@@ -25,18 +37,10 @@ export const columns: ColumnDef<Launch>[] = [
   {
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           {" "}
           Name
-          <ChevronsUpDown
-            size={12}
-            color="currentColor"
-            strokeWidth={2}
-            className="ml-2"
-          />
+          <ChevronsUpDown size={12} color="currentColor" strokeWidth={2} className="ml-2" />
         </Button>
       );
     },
@@ -51,18 +55,10 @@ export const columns: ColumnDef<Launch>[] = [
   {
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           {" "}
           Date
-          <ChevronsUpDown
-            size={12}
-            color="currentColor"
-            strokeWidth={2}
-            className="ml-2"
-          />
+          <ChevronsUpDown size={12} color="currentColor" strokeWidth={2} className="ml-2" />
         </Button>
       );
     },
@@ -98,22 +94,9 @@ export const columns: ColumnDef<Launch>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             {/* TODO: add app pages instead of wikipedia links */}
-            <DropdownMenuItem
-              onClick={() =>
-                url && window.open(url, "_blank", "noopener,noreferrer")
-              }
-            >
-              Read more
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => url && window.open(url, "_blank", "noopener,noreferrer")}>Read more</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() =>
-                patchImage &&
-                window.open(patchImage, "_blank", "noopener,noreferrer")
-              }
-            >
-              View image
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => patchImage && window.open(patchImage, "_blank", "noopener,noreferrer")}>View image</DropdownMenuItem>
             {/* TODO: save progress in local storage */}
             <DropdownMenuItem>Watch </DropdownMenuItem>
           </DropdownMenuContent>

@@ -29,6 +29,7 @@ export function LaunchesDataTable<TData, TValue>({ columns, data }: DataTablePro
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
     data,
@@ -41,11 +42,13 @@ export function LaunchesDataTable<TData, TValue>({ columns, data }: DataTablePro
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
 
     state: {
       sorting,
       columnFilters,
       columnVisibility,
+      rowSelection,
     },
   });
 
@@ -132,6 +135,9 @@ export function LaunchesDataTable<TData, TValue>({ columns, data }: DataTablePro
         <Button variant={"outline"} size="sm" onClick={() => table.lastPage()} disabled={!table.getCanNextPage()}>
           <ChevronsRight size={18} strokeWidth={0.9} absoluteStrokeWidth />
         </Button>
+      </div>
+      <div className="flex-1 text-sm text-muted-foreground">
+        {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} rows selected
       </div>
     </div>
   );
