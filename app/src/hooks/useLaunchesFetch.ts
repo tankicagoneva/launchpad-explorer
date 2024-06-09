@@ -18,6 +18,7 @@ export const useLaunchFetch = () => {
       setLaunches(getLaunchesJson);
     } catch (error) {
       setError(true);
+      console.error(error);
     }
 
     setLoading(false);
