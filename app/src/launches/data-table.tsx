@@ -19,6 +19,7 @@ import React from "react";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -62,6 +63,7 @@ export function LaunchesDataTable<TData, TValue>({ columns, data }: DataTablePro
           onChange={(e) => table.getColumn("name")?.setFilterValue(e.target.value)}
         />
 
+        <ThemeToggle className="mx-4" />
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Button variant="outline" className="ml-auto">
@@ -122,22 +124,24 @@ export function LaunchesDataTable<TData, TValue>({ columns, data }: DataTablePro
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-start space-x-2 py-4">
-        <Button variant={"outline"} size="sm" onClick={() => table.firstPage()} disabled={!table.getCanPreviousPage()}>
-          <ChevronsLeft size={18} strokeWidth={0.9} absoluteStrokeWidth />
-        </Button>
-        <Button variant={"outline"} size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-          <ChevronLeft size={18} strokeWidth={0.9} absoluteStrokeWidth />
-        </Button>
-        <Button variant={"outline"} size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-          <ChevronRight size={18} strokeWidth={0.9} absoluteStrokeWidth />
-        </Button>
-        <Button variant={"outline"} size="sm" onClick={() => table.lastPage()} disabled={!table.getCanNextPage()}>
-          <ChevronsRight size={18} strokeWidth={0.9} absoluteStrokeWidth />
-        </Button>
-      </div>
-      <div className="flex-1 text-sm text-muted-foreground">
-        {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} rows selected
+      <div className="flex space-x-2 py-4 justify-between items-center">
+        <div className="text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} rows selected
+        </div>
+        <div>
+          <Button variant={"outline"} size="sm" onClick={() => table.firstPage()} disabled={!table.getCanPreviousPage()}>
+            <ChevronsLeft size={18} strokeWidth={0.9} absoluteStrokeWidth />
+          </Button>
+          <Button variant={"outline"} size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+            <ChevronLeft size={18} strokeWidth={0.9} absoluteStrokeWidth />
+          </Button>
+          <Button variant={"outline"} size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+            <ChevronRight size={18} strokeWidth={0.9} absoluteStrokeWidth />
+          </Button>
+          <Button variant={"outline"} size="sm" onClick={() => table.lastPage()} disabled={!table.getCanNextPage()}>
+            <ChevronsRight size={18} strokeWidth={0.9} absoluteStrokeWidth />
+          </Button>
+        </div>
       </div>
     </div>
   );
