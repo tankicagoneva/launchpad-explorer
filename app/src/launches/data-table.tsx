@@ -18,7 +18,8 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import  PaginationControls from "@/components/pagination-controls";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import PaginationControls from "@/components/pagination-controls";
 import RowsPerPageSelector from "@/components/rows-per-page-selector";
 import RowSelectionInfo from "@/components/row-selection-info";
 
@@ -75,6 +76,7 @@ export function LaunchesDataTable<TData, TValue>({ columns, data }: DataTablePro
           onChange={(e) => table.getColumn("name")?.setFilterValue(e.target.value)}
         />
 
+        <ThemeToggle className="mx-4" />
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Button variant="outline" className="ml-auto">
