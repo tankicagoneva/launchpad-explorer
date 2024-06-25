@@ -10,18 +10,20 @@ import {
   getSortedRowModel,
   useReactTable,
   ColumnFiltersState,
-  VisibilityState,
+  VisibilityState
 } from "@tanstack/react-table";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import PaginationControls from "@/components/pagination-controls";
+import RowsPerPageSelector from "@/components/rows-per-page-selector";
+import RowSelectionInfo from "@/components/row-selection-info";
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData, TValue> { 
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
@@ -52,6 +54,17 @@ export function LaunchesDataTable<TData, TValue>({ columns, data }: DataTablePro
       rowSelection,
     },
   });
+
+
+  const pageSize = table.getState().pagination.pageSize;
+  const currentPage = table.getState().pagination.pageIndex + 1;
+  const totalPages = table.getPageCount();
+  const canPreviousPage = table.getCanPreviousPage();
+  const canNextPage = table.getCanNextPage();
+  const selectedRow=table.getFilteredSelectedRowModel().rows.length; 
+  const totalRows= table.getFilteredRowModel().rows.length;
+
+
 
   return (
     <div>
@@ -124,23 +137,20 @@ export function LaunchesDataTable<TData, TValue>({ columns, data }: DataTablePro
           </TableBody>
         </Table>
       </div>
-      <div className="flex space-x-2 py-4 justify-between items-center">
-        <div className="text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} rows selected
-        </div>
-        <div>
-          <Button variant={"outline"} size="sm" onClick={() => table.firstPage()} disabled={!table.getCanPreviousPage()}>
-            <ChevronsLeft size={18} strokeWidth={0.9} absoluteStrokeWidth />
-          </Button>
-          <Button variant={"outline"} size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-            <ChevronLeft size={18} strokeWidth={0.9} absoluteStrokeWidth />
-          </Button>
-          <Button variant={"outline"} size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-            <ChevronRight size={18} strokeWidth={0.9} absoluteStrokeWidth />
-          </Button>
-          <Button variant={"outline"} size="sm" onClick={() => table.lastPage()} disabled={!table.getCanNextPage()}>
-            <ChevronsRight size={18} strokeWidth={0.9} absoluteStrokeWidth />
-          </Button>
+      <div className="flex-col flex items-start justify-between md:space-x-2 py-4 md:flex-row md:items-center ">
+         <RowSelectionInfo selectedRow={selectedRow} totalRows={totalRows} />
+        <div className="flex flex-col items-start pt-4 md:space-x-2 md:flex-row md:items-center md:pt-0">
+            <RowsPerPageSelector pageSize={pageSize} onPageSizeChange={(value) => table.setPageSize(value)} />  
+            <PaginationControls 
+              currentPage={currentPage}
+              totalPages={totalPages}
+              canPreviousPage={canPreviousPage} 
+              canNextPage={canNextPage} 
+              onFirstPage={() => table.firstPage()}
+              onPreviousPage={() => table.previousPage()}
+              onNextPage={() => table.nextPage()}
+              onLastPage={() => table.lastPage()}
+            />
         </div>
       </div>
     </div>
