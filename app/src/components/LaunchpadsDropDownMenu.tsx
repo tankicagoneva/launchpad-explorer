@@ -15,7 +15,6 @@ import {
  * @module LaunchpadsDropDownMenu
  * @description  A component rendering a drop down menu with static options
  * 
- * @param {string} image - the image to render
  * @param {string} title - the status of the launchapd
  * @param {function} handleClick - a function to handle the click event
  * @param {function} viewImageFunction - a function to handle the click ON the image
@@ -25,7 +24,7 @@ import {
  */
 
   
-const DropdownMenuComponent = ({ status,  handleClick, viewImageFunction, readMoreLink}: {
+const LaunchpadsDropDownMenu = ({ status,  handleClick, viewImageFunction, readMoreLink}: {
     image: string,
     status: string,
     handleClick: () => void,
@@ -56,4 +55,4 @@ const DropdownMenuComponent = ({ status,  handleClick, viewImageFunction, readMo
   )
 }
 
-export default DropdownMenuComponent;
+export default LaunchpadsDropDownMenu;

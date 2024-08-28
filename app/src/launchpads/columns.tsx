@@ -6,8 +6,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ChevronsUpDown } from "lucide-react";
 import { Launchpad } from "../types/launchpad";
 import { Checkbox } from "@/components/ui/checkbox";
-import DropdownMenuComponent from "@/components/dropdownmenu";
 import { useWatchedLaunchpads } from "@/hooks/useWatchedLaunchpads";
+import LaunchpadsDropDownMenu from "@/components/LaunchpadsDropDownMenu";
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const { handleWatch } = useWatchedLaunchpads();
@@ -80,8 +80,8 @@ export const columns: ColumnDef<Launchpad>[] =
       
 
       return (
-
-      <DropdownMenuComponent
+            <LaunchpadsDropDownMenu 
+              data-testid="actions"
               image={image}
               status={status}
               handleClick={() => handleWatch(id, launchpad)}
