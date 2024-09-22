@@ -35,6 +35,7 @@ const LaunchpadsDropDownMenu = ({
   readMoreLink?: string
 }) => {
   return (
+    <div data-testid={'actions'}>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 p-0">
@@ -58,6 +59,7 @@ const LaunchpadsDropDownMenu = ({
         )}
       </DropdownMenuContent>
     </DropdownMenu>
+    </div>
   )
 }
 
