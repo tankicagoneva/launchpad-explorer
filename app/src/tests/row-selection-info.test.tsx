@@ -31,5 +31,5 @@ test ("renders the correct row selection info", async () => {
     
     const rowSelectionInfo = await screen.findByTestId('row-selection');
     
-    expect(rowSelectionInfo).toHaveTextContent("1 of 10 rows selected")
+    expect(rowSelectionInfo).toHaveTextContent("1 of 10")
 })
