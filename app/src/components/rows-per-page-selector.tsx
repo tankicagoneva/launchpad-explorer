@@ -3,7 +3,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const RowsPerPageSelector = ({pageSize, onPageSizeChange}: {pageSize: number, onPageSizeChange: (value: number) => void}) => {
  const pageSizes = [10, 20, 30, 40, 50];
   return (
-    <><p className="text-sm font-medium">Rows per page</p><Select
+    <>
+    <div data-testid='row-per-page-selection' className="gap-4 flex items-center">
+    <p  className="text-sm font-medium">Rows per page</p>
+    <Select
+    
           value={`${pageSize}`}
           onValueChange={(value) => {
               onPageSizeChange(Number(value));
@@ -12,14 +16,16 @@ const RowsPerPageSelector = ({pageSize, onPageSizeChange}: {pageSize: number, on
           <SelectTrigger className="h-8 w-[70px]">
               <SelectValue placeholder={pageSize} />
           </SelectTrigger>
-          <SelectContent side="top">
+          <SelectContent side="top" >
               {pageSizes.map((pageSize) => (
-                  <SelectItem key={pageSize} value={`${pageSize}`}>
+                  <SelectItem key={pageSize} value={`${pageSize}`} >
                       {pageSize}
                   </SelectItem>
               ))}
           </SelectContent>
-      </Select></>
+      </Select>
+      </div></>
+
     )
 }
 
