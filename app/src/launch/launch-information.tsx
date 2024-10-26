@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import LaunchCounter from "@/components/LaunchCounter";
 import LaunchDetails from "@/components/LaunchDetails";
 import { Launchpad } from '@/types/launchpad';
-import { useLaunchDetails } from '@/hooks/useLaunchDetails ';
+import { useLaunchDetails } from '@/hooks/useLaunchDetails';
 
 
 interface LaunchInformationProps {
@@ -16,26 +16,18 @@ interface LaunchInformationProps {
 
 
 
-const getStatusVariant = (status: string | undefined ): "active" | "retired" | "underconstruction"  | undefined  => {
-  if (!status) return undefined;
-  const formattedStatus = status.replace(/\s/g, "").toLowerCase();
-  switch (formattedStatus) {
-    case "active":
-      return "active";
-    case "retired":
-      return "retired";
-    case "underconstruction":
-      return "underconstruction";
-  
-    default:
-      return "active";
-  }
+const statusVariants: Record<string, "active" | "retired" | "underconstruction"> = {
+  active: "active",
+  retired: "retired",
+  underconstruction: "underconstruction",
 };
 
 export function LaunchInformation({ data }: LaunchInformationProps) {
   const launchCount = data?.launches?.length ?? 0;
   const launchIds = data?.launches ?? [];
   const { launchDetails } = useLaunchDetails(launchIds);
+  const status = data?.status.replace(/\s/g, "").toLowerCase();
+  const statusVariant = statusVariants[status || ""] || "active";
 
 
   return (
@@ -47,7 +39,7 @@ export function LaunchInformation({ data }: LaunchInformationProps) {
      <div className="space-y-8 p-8">
       <div className="flex flex-col lg:flex-row lg:ml-0 lg:justify-between lg:items-center">
         <h2 className="text-3xl font-bold tracking-tight">{data?.full_name}</h2>
-          <Badge variant={getStatusVariant(data?.status)} className="mt-2 self-start lg:self-center">
+          <Badge variant={statusVariant} className="mt-2 self-start lg:self-center">
             {data?.status || 'Active'}
           </Badge>     
       </div>

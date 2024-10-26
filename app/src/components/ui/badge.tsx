@@ -11,7 +11,7 @@ const badgeVariants = cva(
         active:
           "border-transparent bg-primary text-white hover:bg-primary/80",
         retired:
-          "border-transparent bg-secondary text-white hover:bg-secondary/80",
+          "border-transparent bg-secondary text-black hover:bg-secondary/80",
         underconstruction:
           "border-transparent bg-destructive text-white hover:bg-destructive/80",
       },
