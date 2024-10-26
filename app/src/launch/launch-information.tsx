@@ -94,7 +94,7 @@ export function LaunchInformation({ data }: LaunchInformationProps) {
           <p>{data?.details}</p>
         </div>
       </div>
-      <div className="rounded-xl border bg-card text-card-foreground shadow col-span-3 h-[500px] overflow-auto ">
+      <div className="rounded-xl border bg-card text-card-foreground shadow col-span-3 h-[500px] overflow-auto max-md:col-span-4">
        <LaunchCounter launchCount={launchCount} />
        <LaunchDetails launchDetails={launchDetails} />
       </div>
