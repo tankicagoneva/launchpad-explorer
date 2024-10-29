@@ -25,7 +25,7 @@ const statusVariants: Record<string, "active" | "retired" | "underconstruction">
 export function LaunchInformation({ data }: LaunchInformationProps) {
   const launchCount = data?.launches?.length ?? 0;
   const launchIds = data?.launches ?? [];
-  const { launchDetails } = useLaunchDetails(launchIds);
+  const [launchDetails] = useLaunchDetails(launchIds);
   const status = data?.status.replace(/\s/g, "").toLowerCase();
   const statusVariant = statusVariants[status || ""] || "active";
 

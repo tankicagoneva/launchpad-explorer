@@ -29,26 +29,34 @@ import { useState, useEffect } from 'react';
 
 export const useLaunchDetails = (launchIds: string[]) => {
   const [launchDetails, setLaunchDetails] = useState<Launch[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
+
 
   useEffect(() => {
+
     const fetchLaunchDetails = async () => {
       if (launchIds.length > 0) {
         try {
+          setError(false);
+          setLoading(true);
           const response = await fetch(`${API_URL_LAUNCHES}`);
           const allLaunches = await response.json();
           const filteredLaunches = allLaunches.filter((launch: Launch) => 
             launchIds.includes(launch.id)
           );
           setLaunchDetails(filteredLaunches);
+         
         } catch (error) {
           console.error('Error fetching launch details:', error);
+          setError(true);
         }
+        setLoading(false);
       }
     };
 
     fetchLaunchDetails();
   }, [launchIds]);
 
-  return { launchDetails };
-
+  return [launchDetails, loading, error] as const;
 }
