@@ -88,13 +88,13 @@ export function LaunchInformation({ data }: LaunchInformationProps) {
      </div>
 
      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-      <div className="rounded-xl border bg-card text-card-foreground shadow col-span-4">
+      <div className="rounded-xl border bg-card text-card-foreground shadow-sm col-span-4">
         <div className="flex flex-col space-y-1.5 p-6">
           <h3 className="text-3xl font-bold tracking-tight">Details</h3>
           <p>{data?.details}</p>
         </div>
       </div>
-      <div className="rounded-xl border bg-card text-card-foreground shadow col-span-3 h-[500px] overflow-auto max-md:col-span-4">
+      <div className="rounded-xl border bg-card text-card-foreground shadow-sm col-span-3 h-[500px] overflow-auto max-md:col-span-4">
        <LaunchCounter launchCount={launchCount} />
        <LaunchDetails launchDetails={launchDetails} />
       </div>
